@@ -1,6 +1,39 @@
 # kodik-video-links
 Получение ссылок на m3u8-плейлисты с базы Kodik 
 
+## Rest API
+
+Временно работает этот домен
+```
+http://kodik.rinki.pw/
+```
+Можете использовать его, но лучше разверните свой сервер
+
+## Запуск
+
+### Через esbuild-runner
+```bash
+PORT=1234 esr index.ts
+```
+
+### Через ecosystem.config.js в pm2 + esbuild-runner
+
+#### ecosystem.config.js
+```js
+module.exports = {
+  apps: [{
+    name: "kodik-video-links / port: 1234",
+    script: 'PORT=1234 esr index.ts',
+    watch: ['./index.ts']
+  }]
+};
+
+```
+#### Консоль
+```bash
+pm2 start
+```
+
 ## Методы
 
 ## • parse
