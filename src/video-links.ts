@@ -14,10 +14,10 @@ export async function videoLinks(link: string, extended: boolean = false) {
     const rawVideoLinksResponse = await axios.post<VideoLinksTypes>("https://aniqit.com/gvi", null, {
       params: requestParams
     });
-    const videoLinks = Object.entries(rawVideoLinksResponse.data.links).reduce((response, [quality, src]) => (response[quality] = src.map(t => (t.src = Buffer.from(t.src.split("").reverse().join(""), "base64").toString("utf-8"), t)), response), {links: {}} as VideoLinksTypes);
+    const videoLinks = Object.entries(rawVideoLinksResponse.data.links).reduce((response, [quality, src]) => (response.links[quality] = src.map(t => (t.src = Buffer.from(t.src.split("").reverse().join(""), "base64").toString("utf-8"), t)), response), {links: {}} as VideoLinksTypes);
     return makeResponse(200, {
       ...videoLinks,
-      ...(extended ? {params} : {})
+      ...(extended ? {params: params.data} : {})
     });
   } catch(error) {
     return makeError(500, "Cannot get video-links");
