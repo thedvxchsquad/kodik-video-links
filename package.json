@@ -1,6 +1,6 @@
 {
   "name": "kodik-video-links",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Get video links from kodik database",
   "main": "src/index.ts",
   "scripts": {
