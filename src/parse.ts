@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Errors, makeError, makeResponse } from "./utils";
 
-export const linkPlayerRegex = /^(?<protocol>http[s]?:|)\/\/(?<host>[a-z0-9]+\.[a-z]+)\/(?<type>serial|video)\/(?<id>\d+)\/(?<hash>[0-9a-z]+)\/(?<quality>\d+p)$/;
+export const linkPlayerRegex = /^(?<protocol>http[s]?:|)\/\/(?<host>[a-z0-9]+\.[a-z]+)\/(?<type>video|seria|season)\/(?<id>\d+)\/(?<hash>[0-9a-z]+)\/(?<quality>\d+p)$/;
 export async function parse(link: string, extended: boolean = false) {
   if(!linkPlayerRegex.test(link)) return makeError(400, "link is not supported");
   const data: Record<string, string> = {};
