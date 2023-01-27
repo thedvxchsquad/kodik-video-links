@@ -1,29 +1,49 @@
-/// <reference path="global.d.ts"/>
-import type { NextFunction, Request, Response } from "express";
-import express from "express";
-import {parse} from "./parse";
-import { Errors, makeController } from "./utils";
-import {videoLinks} from "./video-links";
+import { App } from '@tinyhttp/app';
+import { printParser, printServer, printVideoLinks } from './logger';
+import { VideoLinks } from 'kodikwrapper';
+import { createErrorAnswer } from './helpers';
+import { BadRequestError } from './errors';
 
-const app = express();
-const port = process.env.PORT ?? 3000;
+const app = new App();
+const PORT = +(process.env.PORT ?? 3000);
 
-function setupErrorAndResponse(req: Request, res: Response, next: NextFunction) {
-  res.error = (err) => res.status(err.statusCode).json(err);
-  res.ok = (ok) => res.status(ok.statusCode).json(ok);
-  next()
-};
-function onListen() {
-  console.log(`kodik-video-links => server has been started at port ${port}`)
-};
+app.get('/parse', async (req, res) => {
+  const { link, extended } = req.query;
+  if (!link) return res.status(400).json(createErrorAnswer(new BadRequestError('"link" not passed')));
+  const isExtended = extended === '' || extended === 'true';
+  printParser(`parse ${link} ${isExtended ? '(extended)' : ''}`);
+  try {
+    const result = await VideoLinks.parseLink({
+      link: link.toString(),
+      extended: isExtended
+    });
+    res.status(200).json({
+      ok: true,
+      data: result
+    });
+  } catch (error) {
+    res.status(400).json(createErrorAnswer(error));
+  };
+});
+app.get('/video-links', async (req, res) => {
+  const { link, extended } = req.query;
+  if (!link) return res.status(400).json(createErrorAnswer(new BadRequestError('"link" not passed')));
+  const isExtended = extended === '' || extended === 'true';
+  printVideoLinks(`videolinks ${link} ${isExtended ? '(extended)' : ''}`);
+  try {
+    const result = await VideoLinks.getLinks({
+      link: link.toString(),
+      extended: isExtended
+    });
+    res.status(200).json({
+      ok: true,
+      data: result
+    });
+  } catch (error) {
+    res.status(400).json(createErrorAnswer(error));
+  };
+});
 
-app.use(setupErrorAndResponse);
-
-app.get("/parse", makeController((req,res) => parse(req.query.link as string, "extended" in req.query)));
-app.get("/video-links", makeController((req,res) => videoLinks(req.query.link as string, "extended" in req.query)));
-
-app.use((req,res) => res.error(Errors.notFound));
-
-app.listen(port, onListen).on("request", (req,res) => {
-  console.log(`kodik-video-links => onRequest:${req.socket.remoteAddress} url:${req.url}`);
+app.listen(PORT, () => {
+  printServer(`started at port ${PORT}`);
 });

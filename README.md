@@ -3,7 +3,7 @@
 
 ## Установка
 ```bash
-git clone https://github.com/typedanimetools/kodik-video-links.git
+git clone https://github.com/thedvxchsquad/kodik-video-links.git
 cd kodik-video-links
 pnpm install
 ```
@@ -44,7 +44,7 @@ extended | boolean | Дополнительные поля | false
 ### Примеры ответов
 ```json
 {
-  "statusCode": 200,
+  "ok": true,
   "data": {
     "protocol": "http",
     "type": "seria",
@@ -56,7 +56,7 @@ extended | boolean | Дополнительные поля | false
 ```
 ```json
 {
-  "statusCode": 200,
+  "ok": true,
   "data": {
     "protocol": "http",
     "type": "seria",
@@ -175,4 +175,4 @@ extended | boolean | Дополнительные поля(распаршенн�
 
 ## Credits
 
-[th3egdvach from typedanimetools](https://github.com/typedanimetools) 2022
+[neverlane from thedvxchsquad](https://github.com/thedvxchsquad) 2022 - ?
