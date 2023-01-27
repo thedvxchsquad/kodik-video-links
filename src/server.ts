@@ -2,7 +2,7 @@ import { App } from '@tinyhttp/app';
 import { printParser, printServer, printVideoLinks } from './logger';
 import { VideoLinks } from 'kodikwrapper';
 import { createErrorAnswer } from './helpers';
-import { BadRequestError } from './errors';
+import { BadRequestError, NotFoundError } from './errors';
 
 const app = new App();
 const PORT = +(process.env.PORT ?? 3000);
@@ -42,6 +42,10 @@ app.get('/video-links', async (req, res) => {
   } catch (error) {
     res.status(400).json(createErrorAnswer(error));
   };
+});
+
+app.use(async (req, res) => {
+  res.status(400).json(createErrorAnswer(new NotFoundError('unkonwn API method')));
 });
 
 app.listen(PORT, () => {
