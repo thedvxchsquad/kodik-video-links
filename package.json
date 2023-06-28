@@ -19,7 +19,7 @@
     "logger": "^0.0.1"
   },
   "devDependencies": {
-    "@types/node": "^17.0.15",
+    "@types/node": "^18.0.0",
     "ts-node": "^10.8.1",
     "typescript": "4.9.4"
   }
