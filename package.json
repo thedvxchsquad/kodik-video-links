@@ -15,8 +15,7 @@
   "dependencies": {
     "@tinyhttp/app": "^2.0.29",
     "chalk": "^5.2.0",
-    "kodikwrapper": "^1.0.7",
-    "logger": "^0.0.1"
+    "kodikwrapper": "^2.0.3"
   },
   "devDependencies": {
     "@types/node": "^17.0.15",
