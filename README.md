@@ -1,3 +1,5 @@
+# устарело! мне лень переписывать сервер, да и смысла особого нет, используйте [kodikwrapper](https://github.com/thedvxchsquad/kodikwrapper) и класс `VideoLinks`
+
 # kodik-video-links
 Получение ссылок на m3u8-плейлисты с базы Kodik 
 
